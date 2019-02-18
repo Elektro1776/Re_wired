@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    main: "./src/main.js"
+    main: ["core-js/fn/promise", "./src/main.js"]
   },
   mode: "development",
   output: {
@@ -10,12 +10,22 @@ module.exports = {
     path: path.resolve(__dirname, "../dist"),
     publicPath: "/"
   },
+  devtool: 'cheap-source-map',
   devServer: {
     contentBase: "dist",
     overlay: true
   },
   module: {
     rules:[
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: "babel-loader"
+          }
+        ],
+        exclude: /node_modules/
+      },
       {
         test: /.css$/,
         use: [
