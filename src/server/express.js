@@ -15,6 +15,7 @@ app.use(webpackDevMiddleware);
 app.use(webpackHotMiddleware);
 const staticMiddleware = express.static('dist');
 app.use(staticMiddleware);
+// debugger;
 app.listen(port, () => {
   console.log('server is listening on ', port);
 })
