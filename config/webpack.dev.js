@@ -12,7 +12,7 @@ module.exports = {
     path: path.resolve(__dirname, "../dist"),
     publicPath: "/"
   },
-  devtool: 'cheap-source-map',
+  devtool: 'source-map',
   devServer: {
     contentBase: "dist",
     overlay: true,
@@ -24,7 +24,7 @@ module.exports = {
   module: {
     rules:[
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         use: [
           {
             loader: "babel-loader"
