@@ -1,0 +1,13 @@
+{
+  "name": "Re_wired",
+  "version": "0.1.0",
+  "description": "The Beginning of the End",
+  "main": "index.js",
+  "author": "austin reynolds <elektricwebdesign@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-dev-server": "^3.1.14"
+  }
+}
