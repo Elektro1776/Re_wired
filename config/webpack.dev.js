@@ -33,15 +33,13 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /.css$/,
+        test: /\.(scss|sass)$/,
         use: [
-          {
-            loader: 'style-loader'
-          },
-          {
-            loader: 'css-loader'
-          }
-        ]
+              { loader:  "style-loader"}, // creates style nodes from JS strings
+              { loader:  "css-loader" },
+              { loader: "postcss-loader" }, // translates CSS into CommonJS
+              { loader: "sass-loader" } // compiles Sass to CSS, using Node Sass by default
+            ]
       },
       {
         test: /.html$/,
