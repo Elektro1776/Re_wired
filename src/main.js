@@ -1,6 +1,2 @@
-require('babel-runtime/regenerator');
-require('babel-register');
-require("webpack-hot-middleware/client?reload=true");
-require('./main.scss');
-require('./index.html');
-require('./app');
+require('./client/main.scss');
+require('./client/app/Main.jsx');
