@@ -4,8 +4,7 @@
   "description": "The Beginning of the End",
   "main": "src",
    "engines": {
-    "node": ">= 10.15.1",
-    "yarn": ">= 1.13.0"
+    "node": ">= 10.15.1"
   },
   "author": "austin reynolds <elektricwebdesign@gmail.com>",
   "license": "MIT",
