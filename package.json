@@ -12,7 +12,7 @@
     "prod": "NODE_ENV=production node src/server/index.js",
     "dev": "nodemon --watch src/server --watch config --inspect src/server/index.js",
     "cli": "node src/tools/cli",
-    "test": "webpack --config=config/webpack.dev.js"
+    "test": "webpack --config=config/webpack.prod-server.js"
   },
   "browserslist": [
     "cover 99.5%",
