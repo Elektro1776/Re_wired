@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "The Beginning of the End",
   "main": "src",
-   "engines": {
+  "engines": {
     "node": ">= 10.15.1"
   },
   "author": "austin reynolds <elektricwebdesign@gmail.com>",
@@ -18,6 +18,21 @@
     "cover 99.5%",
     "ie 6-8"
   ],
+   "husky": {
+     "hooks": {
+       "pre-commit": "lint-staged"
+     }
+   },
+   "lint-staged": {
+    "*.{js,jsx,json}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.graphql": [
+      "prettier --parser graphql --write",
+      "git add"
+    ]
+  },
   "dependencies": {
     "apollo-server-express": "^2.4.2",
     "autoprefixer": "^9.4.7",
@@ -46,6 +61,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss": "^7.0.14",
     "postcss-loader": "^3.0.0",
+    "prettier": "1.16.4",
     "ramda": "^0.26.1",
     "react": "^16.8.2",
     "react-dom": "^16.8.2",
@@ -66,13 +82,19 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "caporal": "^1.1.0",
     "cssnano": "^4.1.10",
     "eslint": "^5.14.1",
     "eslint-config-airbnb": "^17.1.0",
+    "eslint-loader": "^2.1.2",
     "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-json": "^1.4.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.4",
     "shelljs": "^0.8.3",
     "webpack-graphql-loader": "^1.0.0"
   }

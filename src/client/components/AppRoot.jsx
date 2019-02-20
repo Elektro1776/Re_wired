@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes.jsx';
-
 
 class AppRoot extends Component {
   render() {
@@ -12,7 +11,6 @@ class AppRoot extends Component {
       </Router>
     );
   }
-
 }
 
 export default hot(module)(AppRoot);
