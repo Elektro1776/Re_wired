@@ -12,13 +12,14 @@
     "babel-preset-react"
   ],
   "plugins": [
-    [
-      "react-hot-loader/babel",
-      {
-        "safetyNet": true
-      }
-    ],
     "transform-class-properties",
     "transform-runtime",
-  ]
+    "syntax-dynamic-import",
+    "universal-import"
+  ],
+   "env": {
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    }
+  }
 }
