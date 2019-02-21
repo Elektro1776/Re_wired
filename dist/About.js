@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{CSry:function(e,t,u){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n,a=u("q1tI"),c=(n=a)&&n.__esModule?n:{default:n};u("jXBc"),t.default=function(){return c.default.createElement("div",{className:"about"},c.default.createElement("h1",null,"About "))}},jXBc:function(e,t,u){}}]);

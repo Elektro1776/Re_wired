@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import universal from 'react-universal-component';
 
 const Loading = () => <div>Loading:::</div>;
@@ -9,15 +9,7 @@ const UniversalComponent = universal(props => import(`./${props.page}`), {
 
 export default () => (
   <div>
-    <div className="nav">
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <Link to="/counter">Counter</Link>
-    </div>
     <Switch>
-      <Route exact path="/">
-        <UniversalComponent page={'Home'} />
-      </Route>
       <Route
         path="/about"
         render={({ staticContext }) => {
@@ -28,9 +20,6 @@ export default () => (
           return <UniversalComponent page={'About'} site={site} />;
         }}
       />
-      <Route path="/counter">
-        <UniversalComponent page={'Counter'} />
-      </Route>
     </Switch>
   </div>
 );

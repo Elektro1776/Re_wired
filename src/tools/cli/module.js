@@ -16,11 +16,11 @@ function copyFiles(logger, templatePath, module, location) {
   logger.info(`Copying ${location} files…`);
 
   // create new module directory
-  const mkdir = shell.mkdir(`${__dirname}/../../packages/${location}/src/modules/${module}`);
+  const mkdir = shell.mkdir(`${__dirname}/../../${location}/modules/${module}`);
 
   // continue only if directory does not jet exist
   if (mkdir.code === 0) {
-    const destinationPath = `${__dirname}/../../packages/${location}/src/modules/${module}`;
+    const destinationPath = `${__dirname}/../../${location}/modules/${module}`;
     shell.cp('-R', `${templatePath}/${location}/*`, destinationPath);
 
     logger.info(`✔ The ${location} files have been copied!`);
@@ -44,13 +44,17 @@ function copyFiles(logger, templatePath, module, location) {
       }
     });
 
+    console.log('PATH:: before cd', __dirname);
     shell.cd('..');
-    // get module input data
-    const pathFrag = `${__dirname}/../../packages/${location}/src/modules/`;
-    let fileName = 'index.js';
-    if (location === 'server') fileName = fileName.replace('j', 't');
-    const path = pathFrag.concat(fileName);
+    console.log('PATH:: after cd', __dirname);
 
+    // get module input data
+    const pathFrag = `${__dirname}/../../${location}/modules/`;
+    let fileName = 'index.js';
+    console.log('PATH FRAG::', pathFrag);
+
+    const path = pathFrag.concat(fileName);
+    console.log('PATH:::', path);
     let data = fs.readFileSync(path);
 
     // extract Feature modules
@@ -71,22 +75,21 @@ function copyFiles(logger, templatePath, module, location) {
 function deleteFiles(logger, templatePath, module, location) {
   logger.info(`Deleting ${location} files…`);
 
-  const modulePath = `${__dirname}/../../packages/${location}/src/modules/${module}`;
+  const modulePath = `${__dirname}/../../${location}/modules/${module}`;
 
   if (fs.existsSync(modulePath)) {
     // create new module directory
     shell.rm('-rf', modulePath);
 
     // change to destination directory
-    shell.cd(`${__dirname}/../../packages/${location}/src/modules/`);
+    shell.cd(`${__dirname}/../../${location}/modules/`);
 
     // add module to Feature function
     //let ok = shell.sed('-i', `import ${module} from '.\/${module}';`, '', 'index.js');
 
     // get module input data
-    const pathFrag = `${__dirname}/../../packages/${location}/src/modules/`;
+    const pathFrag = `${__dirname}/../../${location}/modules/`;
     let fileName = 'index.js';
-    if (location === 'server') fileName = fileName.replace('j', 't');
     const path = pathFrag.concat(fileName);
     let data = fs.readFileSync(path);
 

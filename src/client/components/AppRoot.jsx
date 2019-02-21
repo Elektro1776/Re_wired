@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './Routes.jsx';
+import Routes from '../app/Routes';
 
 class AppRoot extends Component {
   render() {

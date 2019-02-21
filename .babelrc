@@ -12,6 +12,7 @@
     "babel-preset-react"
   ],
   "plugins": [
+    "syntax-object-rest-spread",
     "transform-class-properties",
     "transform-runtime",
     "syntax-dynamic-import",

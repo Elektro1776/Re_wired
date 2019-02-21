@@ -17,7 +17,8 @@
         "js": "never",
         "jsx": "never",
         "ts": "never",
-        "tsx": "never"
+        "tsx": "never",
+        "web.jsx": "never"
       }
     ],
     "no-use-before-define": 0,

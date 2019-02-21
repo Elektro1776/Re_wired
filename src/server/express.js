@@ -2,11 +2,10 @@ import express from 'express';
 
 import webpack from 'webpack';
 import expressStaticGzip from 'express-static-gzip';
-
-import configDevClient from '../../config/webpack.dev-client';
-import configDevServer from '../../config/webpack.dev-server';
-import clientConfigProd from '../../config/webpack.prod-client';
-import serverConfigProd from '../../config/webpack.prod-server';
+import configDevClient from '../../webpack/webpack.dev-client';
+import configDevServer from '../../webpack/webpack.dev-server';
+import clientConfigProd from '../../webpack/webpack.prod-client';
+import serverConfigProd from '../../webpack/webpack.prod-server';
 
 const app = express();
 const port = process.env.PORT || 8080;
