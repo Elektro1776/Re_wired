@@ -18,7 +18,7 @@ console.log('CUSTOM EXTENSION::', customExtension());
 module.exports = {
   name: 'client',
   entry: {
-    vendor: ['react', 'react-dom'],
+    vendor: ['react', 'react-dom', 'ramda'],
     main: ['webpack-hot-middleware/client?reload=true', 'react-hot-loader/patch', './src/main.js']
   },
   mode: 'development',

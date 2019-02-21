@@ -56,7 +56,10 @@ module.exports = {
         use: [
           ExtractCssChunks.loader,
           {
-            loader: 'css-loader'
+            loader: 'css-loader',
+            options: {
+              localIdentName: '[name]'
+            }
           },
           {
             loader: 'postcss-loader'
@@ -80,10 +83,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractCssChunks({
-      filename: "[name].css",
-      chunkFilename: "[id].css",
-    }),
+    new ExtractCssChunks(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({

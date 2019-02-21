@@ -7,41 +7,55 @@ import configDevServer from '../../webpack/webpack.dev-server';
 import clientConfigProd from '../../webpack/webpack.prod-client';
 import serverConfigProd from '../../webpack/webpack.prod-server';
 
-const app = express();
-const port = process.env.PORT || 8080;
-const isProd = process.env.NODE_ENV === 'production';
+// import createApolloServer from './apolloServer';
 
-const isDev = !isProd;
-let isBuilt = false;
+// const app = express();
+// const port = process.env.PORT || 8080;
+// const isProd = process.env.NODE_ENV === 'production';
+//
+// const isDev = !isProd;
+// let isBuilt = false;
 
-const done = () =>
-  !isBuilt &&
-  app.listen(port, () => {
-    isBuilt = true;
-    console.log('BUILD COMPLETE -- Listening @ http://localhost:8080');
-  });
+const initServer = () => {
+  const app = express();
+  const port = process.env.PORT || 8080;
+  const isProd = process.env.NODE_ENV === 'production';
 
-if (isDev) {
-  const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
+  const isDev = !isProd;
+  let isBuilt = false;
+  // const graphServer = await createApolloServer();
+  // graphServer.applyMiddleWare({ app });
+  const done = () =>
+    !isBuilt &&
+    app.listen(port, () => {
+      isBuilt = true;
+      console.log('BUILD COMPLETE -- Listening @ http://localhost:8080');
+    });
 
-  const compiler = webpack([configDevClient, configDevServer]);
+  if (isDev) {
+    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
 
-  const clientCompiler = compiler.compilers[0];
-  const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
+    const compiler = webpack([configDevClient, configDevServer]);
 
-  const webpackHotMiddlware = require('webpack-hot-middleware')(clientCompiler);
+    const clientCompiler = compiler.compilers[0];
+    const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
 
-  app.use(webpackDevMiddleware);
-  app.use(webpackHotMiddlware);
-  app.use(webpackHotServerMiddleware(compiler));
-  webpackDevMiddleware.waitUntilValid(done);
-} else {
-  webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
-    const clientStats = stats.toJson().children[0];
-    const serverRender = require('../../build/prod-server-bundle.js').default;
-    app.use(expressStaticGzip('dist'));
-    app.use('*', serverRender({ clientStats }));
+    const webpackHotMiddlware = require('webpack-hot-middleware')(clientCompiler);
 
-    done();
-  });
-}
+    app.use(webpackDevMiddleware);
+    app.use(webpackHotMiddlware);
+    app.use(webpackHotServerMiddleware(compiler));
+    webpackDevMiddleware.waitUntilValid(done);
+  } else {
+    webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
+      const clientStats = stats.toJson().children[0];
+      const serverRender = require('../../build/prod-server-bundle.js').default;
+      app.use(expressStaticGzip('dist'));
+      app.use('*', serverRender({ clientStats }));
+
+      done();
+    });
+  }
+};
+
+initServer();
