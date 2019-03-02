@@ -1,12 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import AppRoot from '../components/AppRoot.jsx';
+import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Routes from './Routes';
 
-function render(Component) {
-  ReactDOM.hydrate(
-    <Component />,
-    document.getElementById('react-root')
-  )
+class Main extends Component {
+  render() {
+    return (
+      <Router>
+        <Routes />
+      </Router>
+    );
+  }
 }
 
-render(AppRoot)
+export default hot(module)(Main);

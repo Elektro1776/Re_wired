@@ -1,0 +1,29 @@
+{
+  "compact": false,
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "browsers": ["last 2 versions"]
+        },
+      }
+    ],
+    "babel-preset-react"
+  ],
+  "plugins": [
+    "syntax-object-rest-spread",
+    "transform-async-to-generator",
+    "transform-class-properties",
+    "transform-runtime",
+    "syntax-dynamic-import",
+    "universal-import"
+
+  ],
+  "only": ["*.jsx", "*.js"],
+   "env": {
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    }
+  }
+}

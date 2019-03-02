@@ -1,6 +1,9 @@
 import home from './home';
-import product from './product';
-import user from './user';
+
 import Feature from './ClientConnector';
 
-export default new Feature(home, product, user);
+const modules = new Feature(home);
+
+// export const routes = modules.routes;
+
+export default modules;

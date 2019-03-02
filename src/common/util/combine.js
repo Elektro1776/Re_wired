@@ -1,7 +1,3 @@
-import { map, reduce, flatten, without, union } from 'ramda';
+import { map, flatten, without } from 'ramda';
 
-export default (features, extractor) => {
-  return without('undefined', flatten(map(res => {
-    return extractor(res);
-  }, features)))
-}
+export default (features, extractor) => without('undefined', flatten(map(res => extractor(res), features)));

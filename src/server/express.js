@@ -1,13 +1,14 @@
 import express from 'express';
-
-import webpack from 'webpack';
+//
+// import webpack from 'webpack';
 import expressStaticGzip from 'express-static-gzip';
-import configDevClient from '../../webpack/webpack.dev-client';
-import configDevServer from '../../webpack/webpack.dev-server';
-import clientConfigProd from '../../webpack/webpack.prod-client';
-import serverConfigProd from '../../webpack/webpack.prod-server';
-
-// import createApolloServer from './apolloServer';
+// import configDevClient from '../../webpack/webpack.dev-client';
+// import configDevServer from '../../webpack/webpack.dev-server';
+// import clientConfigProd from '../../webpack/webpack.prod-client';
+// import serverConfigProd from '../../webpack/webpack.prod-server';
+import expressPlayground from 'graphql-playground-middleware-express';
+import createApolloServer from './apolloServer';
+import renderMiddleWare from './middleware/render';
 
 // const app = express();
 // const port = process.env.PORT || 8080;
@@ -15,47 +16,30 @@ import serverConfigProd from '../../webpack/webpack.prod-server';
 //
 // const isDev = !isProd;
 // let isBuilt = false;
+// const init = () => {
+const app = express();
+// const port = process.env.PORT || 8080;
+// const isProd = process.env.NODE_ENV === 'production';
 
-const initServer = () => {
-  const app = express();
-  const port = process.env.PORT || 8080;
-  const isProd = process.env.NODE_ENV === 'production';
+// let isBuilt = false;
+const graphServer = createApolloServer();
 
-  const isDev = !isProd;
-  let isBuilt = false;
-  // const graphServer = await createApolloServer();
-  // graphServer.applyMiddleWare({ app });
-  const done = () =>
-    !isBuilt &&
-    app.listen(port, () => {
-      isBuilt = true;
-      console.log('BUILD COMPLETE -- Listening @ http://localhost:8080');
-    });
+graphServer.applyMiddleware({ app });
+app.use(expressStaticGzip('dist'));
+//   !isBuilt &&
+//   app.listen(port, () => {
+//     isBuilt = true;
+//     console.log('BUILD COMPLETE -- Listening @ http://localhost:8080');
+//   });
+app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
+app.use((...args) => renderMiddleWare(...args));
 
-  if (isDev) {
-    const webpackHotServerMiddleware = require('webpack-hot-server-middleware');
-
-    const compiler = webpack([configDevClient, configDevServer]);
-
-    const clientCompiler = compiler.compilers[0];
-    const webpackDevMiddleware = require('webpack-dev-middleware')(compiler);
-
-    const webpackHotMiddlware = require('webpack-hot-middleware')(clientCompiler);
-
-    app.use(webpackDevMiddleware);
-    app.use(webpackHotMiddlware);
-    app.use(webpackHotServerMiddleware(compiler));
-    webpackDevMiddleware.waitUntilValid(done);
-  } else {
-    webpack([clientConfigProd, serverConfigProd]).run((err, stats) => {
-      const clientStats = stats.toJson().children[0];
-      const serverRender = require('../../build/prod-server-bundle.js').default;
-      app.use(expressStaticGzip('dist'));
-      app.use('*', serverRender({ clientStats }));
-
-      done();
-    });
-  }
-};
-
-initServer();
+if (module.hot) {
+  console.log('MODULE: HOT::');
+  // module.hot.dispose(() => {});
+  module.hot.accept(['../../dist/stats.json', './middleware/render', './apolloServer'], () => {
+    // console.log('ACCEPTED HOT MODULE::');
+  });
+  module.hot.accept();
+}
+export default app;

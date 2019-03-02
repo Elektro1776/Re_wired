@@ -1,8 +1,9 @@
 /*eslint-disable no-unused-vars*/
 import React from 'react';
 import { graphql, compose } from 'react-apollo';
+import { hot } from 'react-hot-loader';
 
-import HomeView from '../components/HomeView';
+import HomeView from './components/HomeView';
 
 class Home extends React.Component {
   render() {
@@ -10,6 +11,6 @@ class Home extends React.Component {
   }
 }
 
-const HomeWithApollo = compose()(Home);
+// hot(Home);
 
-export default () => <HomeWithApollo />;
+export default hot(Home);

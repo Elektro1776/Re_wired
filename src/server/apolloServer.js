@@ -1,12 +1,13 @@
 import { ApolloServer } from 'apollo-server-express';
 // import { formatResponse } from 'apollo-logger';
-import modules from './modules/index';
-import createSchema from './api/schema';
+import modules from './modules';
+import schema from './api/schema';
 // import settings from '../settings';
 // import log from '../../common/log';
 
-const createGraphServer = async () => {
-  const schema = await createSchema();
+export default () => {
+  console.log('APOLLO SERVER CREATED:::::');
+  // const schema = await createSchema();
   //console.log('SCHEMA HERE', schema);
   return new ApolloServer({
     schema,
@@ -26,5 +27,3 @@ const createGraphServer = async () => {
     playground: false
   });
 };
-
-export default createGraphServer;

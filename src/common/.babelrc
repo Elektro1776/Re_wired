@@ -1,0 +1,27 @@
+{
+  "compact": false,
+  "presets": [
+    [
+      "env",
+      {
+          "targets": {
+            "node": "current"
+        },
+      }
+    ],
+    "babel-preset-react"
+  ],
+  "plugins": [
+    "syntax-object-rest-spread",
+    "transform-async-to-generator",
+    "transform-class-properties",
+    "transform-runtime",
+
+  ],
+  "only": ["*.jsx", "*.js"],
+   "env": {
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    }
+  }
+}

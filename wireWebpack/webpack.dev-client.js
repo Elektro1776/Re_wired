@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
+var ManifestPlugin = require('webpack-manifest-plugin');
+var StatsPlugin = require('stats-webpack-plugin');
 
 var customExtension = function() {
   return ['.web.', '.'].map(prefix => {
@@ -14,27 +16,44 @@ var customExtension = function() {
   .concat(['.json'])
 
 }
-console.log('CUSTOM EXTENSION::', customExtension());
+// console.log('CUSTOM EXTENSION::', customExtension());
 module.exports = {
   name: 'client',
   entry: {
     vendor: ['react', 'react-dom', 'ramda'],
-    main: ['webpack-hot-middleware/client?reload=true', 'react-hot-loader/patch', './src/main.js']
+    main: ['webpack/hot/dev-server', `webpack-dev-server/client`,  'react-hot-loader/patch', './src/client/index.jsx']
   },
   mode: 'development',
   output: {
     filename: '[name]-bundle.js',
     chunkFilename: '[name].js',
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     publicPath: '/'
   },
   devtool: 'source-map',
   devServer: {
-    contentBase: 'dist',
+    contentBase: '/',
     overlay: true,
+    hot: true,
     stats: {
       colors: true
-    }
+    },
+    proxy: {
+      '/': 'http://localhost:8080',
+      // '/playground': {
+      //   target: 'http://localhost:3000',
+      //   bypass: function(req, res, proxyOptions) {
+      //     console.log('REQ IN PROXY:', req.url);
+      //
+      //     console.log('PROXY OPTIONS:', proxyOptions);
+      //     return true;
+      //   }
+      // }
+    },
+    port: 3000,
+    publicPath: '/',
+    open: true
+
   },
   resolve: {
     extensions: ['.web.jsx', '.web.js', '.js', '.json', '.jsx']
@@ -106,8 +125,19 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
         WEBPACK: true
-      }
+      },
+      __DEV__: process.env.NODE_ENV !== 'production',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new StatsPlugin('stats.json',{
+
+    }),
+    new ManifestPlugin({
+      fileName: 'assets.json'
+    }),
+    // new webpack.optimize.LimitChunkCountPlugin({
+    //   maxChunks: 5
+    // }),
+    new webpack.HotModuleReplacementPlugin()
   ]
 };

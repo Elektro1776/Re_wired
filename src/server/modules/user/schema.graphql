@@ -1,5 +1,27 @@
-extend type Query {}
+extend type Query {
+  # Get all users ordered by: OrderByUserInput add filtered by: FilterUserInput
+  # users(orderBy: OrderByUserInput, filter: FilterUserInput): [User]
+  # Get user by id
+  # user(id: Int!): UserPayload
+  # Get current user
+  currentUser: User
+}
 
-extend type Mutation {}
+# Description of individual User
+type User {
+  id: Int!
+  role: String
+  first_name: String
+  last_name: String
+  email: String
+  username: String
+  telephone: String
+  is_active: Boolean
+  # auth: UserAuth
+}
 
-extend type Subscription {}
+# Payload returned on mutation of User type
+# type UserPayload {
+#   user: User
+#   errors: [FieldError!]
+# }

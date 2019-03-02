@@ -23,7 +23,7 @@ const HomeView = () => {
       {renderMetaData()}
       <div className="profile">
         <img src={imagePath} />
-        <h1>Hello link</h1>
+        <h1>Hello Link</h1>
       </div>
     </PageLayout>
   );

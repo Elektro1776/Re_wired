@@ -1,26 +1,26 @@
-{
+{ "compact": false,
   "presets": [
     [
       "env",
       {
         "targets": {
-          "browsers": ["last 2 versions"]
-        },
-        "debug": false
+          "node": "current"
+      },
+        "only": ["*.jsx", "*.js"],
+        "debug": true
       }
     ],
     "babel-preset-react"
   ],
+  "only": ["*.jsx", "*.js"],
   "plugins": [
     "syntax-object-rest-spread",
+    "transform-async-to-generator",
     "transform-class-properties",
     "transform-runtime",
     "syntax-dynamic-import",
-    "universal-import"
-  ],
-   "env": {
-    "development": {
-      "plugins": ["react-hot-loader/babel"]
-    }
-  }
+    ["universal-import", {
+      "babelServer": true
+      }]
+  ]
 }
